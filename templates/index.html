@@ -4,9 +4,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>index</title>
+    <title>AllPlaylists</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="shortcut icon" href="/static/img/spotify.png" type="image/x-icon">
 </head>
 <body>
-    <a href="{{ url_for('login') }}">Login com o Spotify</a>
+    <main class="main-login">
+        <div class="left-login">
+            <h1>Junte suas playlists do Spotify em uma só<br>e aproveite o melhor de todas as músicas</h1>
+            <img class="left-login-image" src="/static/img/music-animate.svg" alt="music-animate">
+        </div>
+        <div class="right-login">
+            <div class="card-login">
+                <h1>Login</h1>
+                <a href="{{ url_for('login') }}">Entrar com o Spotify</a>
+            </div>
+        </div>
+    </main>
 </body>
 </html>
