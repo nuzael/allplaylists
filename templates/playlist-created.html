@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    <title>AllPlaylists</title>
+{% endblock %}
+
+{% block main %}
+    <main class="main-playlists">
+        <div class="success">
+            <div class="left-success">
+                <h1>Sua playlist foi criada, aproveite!</h1>
+                <img class="left-success-image" src="/static/img/success.svg" alt="success">
+            </div>
+            <div class="right-success">
+                <a href="{{ url_for('playlists') }}">Voltar</a>
+            </div>
+        </div>
+    </main>
+{% endblock %}

@@ -32,7 +32,6 @@ def authorize():
 
 @app.route('/logout')
 def logout():
-    # Revisar
     for key in list(session.keys()):
         session.pop(key)
     return redirect('/')
@@ -59,11 +58,11 @@ def create_playlist():
         list_of_songs.clear()
         
         for i in request.form:
-            # Ajustando o ID com fatiamento de strings.
+            # Ajustando o ID com fatiamento de strings
             if i != 'playlist_name':
                 playlist_id = i.split(',')[0][2:-1:]
             
-                # Acessando as Músicas e adicionando em uma lista.
+                # Acessando as Músicas e adicionando em uma lista
                 track = sp.playlist_items(playlist_id=playlist_id)
                 for music in track['items']:
                     list_of_songs.append(music["track"]["uri"])
@@ -79,12 +78,12 @@ def create_playlist():
         
         for i in playlist_list1:
             if i.get('playlist_name') == name:
-                # Adicionando as músicas em uma playlist que o usuário já possui.
+                # Adicionando as músicas em uma playlist que o usuário já possui
                 playlist_id = i.get('id')
                 sp.user_playlist_add_tracks(user=user, playlist_id=playlist_id, tracks=list_of_songs)
-                return render_template('created.html')
+                return render_template('playlist-created.html')
     
-        # Criando playlist caso ainda não exista.
+        # Criando playlist caso ainda não exista
         sp.user_playlist_create(user=user, name=name, public=True)
         
         # Atualizando a lista de playlists
@@ -94,15 +93,15 @@ def create_playlist():
         
         for i in playlist_list2:
             if i.get('playlist_name') == name:
-                # Adicionando as músicas em uma playlist que o usuário criou agora.
+                # Adicionando as músicas em uma playlist que o usuário criou agora
                 playlist_id = i.get('id')
                 sp.user_playlist_add_tracks(user=user, playlist_id=playlist_id, tracks=list_of_songs)
-                return render_template('created.html')
+                return render_template('playlist-created.html')
             
     else:
         return render_template('playlists.html')
         
-    return render_template('created.html')
+    return render_template('playlist-created.html')
 
 def create_spotipy_oauth():
     return SpotifyOAuth(client_id=os.getenv('client_id'),

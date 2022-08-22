@@ -33,6 +33,13 @@ nav > a {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+    row-gap: 10px;
+}
+
+.main-playlists > p {
+    color: white;
+    font-size: 1em;
 }
 
 .main-playlists > form {
@@ -43,14 +50,65 @@ nav > a {
     border-radius: 20px;
 }
 
+.main-playlists .checkbox-label {
+    color: #00ff88;
+}
+
 .main-playlists .input-playlist {
-    width: 250px;
+    width: 220px;
     padding: 2px;
     text-align: center;
     justify-content: center;
     display: flex;
     margin: auto;
+}
 
+.success {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.left-success {
+    width: 50vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.left-success > h1 {
+    font-size: 2vw;
+    padding: 10px;
+    margin-top: 30px;
+    color: #77ffc0;
+}
+
+.left-success-image {
+    width: 30vw;
+    padding-top: 20px;
+}
+
+.right-success {
+    width: 50vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.right-success > a {
+    background: #00ff88;
+    color: #2b134b;
+    border-radius: 20px;
+    border: none;
+    width: 110px;
+    padding: 10px;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 800;
+    box-shadow: 0px 10px 40px -12px #00ff8052;
 }
 
 .main-playlists > form > button {

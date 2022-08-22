@@ -7,10 +7,11 @@
 
 {% block main %}
     <main class="main-playlists">
+        <p>Selecione quais playlists você gostaria de unir</p>
         <form action="{{ url_for('create_playlist') }}" method="POST">
             {% for nome in playlist_info %}
                 <input type="checkbox" id="{{ nome }}" name="{{ nome }}" value="{{ nome }}">
-                <label for="{{ nome }}">{{ nome[1] }}</label>
+                <label class="checkbox-label" for="{{ nome }}">{{ nome[1] }}</label>
                 <br>
             {% endfor %}
             <br>
