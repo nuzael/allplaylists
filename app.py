@@ -108,3 +108,7 @@ def create_spotipy_oauth():
             client_secret=os.getenv('client_secret'),
             redirect_uri=url_for('authorize', _external=True),
             scope='user-library-read playlist-modify-public')
+    
+
+if __name__ == '__main__':
+    app.run(debug=False)
