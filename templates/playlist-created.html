@@ -8,13 +8,9 @@
 {% block main %}
     <main class="main-playlists">
         <div class="success">
-            <div class="left-success">
-                <h1>Sua playlist foi criada, aproveite!</h1>
-                <img class="left-success-image" src="/static/img/success.svg" alt="success">
-            </div>
-            <div class="right-success">
-                <a href="{{ url_for('playlists') }}">Voltar</a>
-            </div>
+            <h1>Sua playlist foi criada, aproveite!</h1>
+            <img class="success-image" src="/static/img/success.svg" alt="success">
+            <a href="{{ url_for('playlists') }}">Voltar</a>
         </div>
     </main>
 {% endblock %}
