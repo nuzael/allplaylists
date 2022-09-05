@@ -1,6 +1,7 @@
 from flask import Flask, session, request, render_template, url_for, redirect
 from spotipy.oauth2 import SpotifyOAuth
 import dotenv
+import time
 import spotipy
 import os
 
@@ -38,6 +39,11 @@ def logout():
 
 @app.route('/playlists', methods=['GET', 'POST'])
 def playlists():
+    session['token_info'], authorized = get_token()
+    session.modified = True
+    if not authorized:
+        return redirect('/')
+        
     sp = spotipy.Spotify(auth=session['token_info']['access_token'])
     
     # Consultando as Playlists
@@ -48,8 +54,13 @@ def playlists():
   
     return render_template('playlists.html', **{'playlist_info': playlist_info})
 
-@app.route('/playlist-created', methods=['POST'])
+@app.route('/playlist-created', methods=['GET', 'POST'])
 def create_playlist():
+    session['token_info'], authorized = get_token()
+    session.modified = True
+    if not authorized:
+        return redirect('/')
+    
     sp = spotipy.Spotify(auth=session['token_info']['access_token'])
     user = sp.current_user()['id']
     
@@ -97,11 +108,9 @@ def create_playlist():
                 playlist_id = i.get('id')
                 sp.user_playlist_add_tracks(user=user, playlist_id=playlist_id, tracks=list_of_songs)
                 return render_template('playlist-created.html')
-            
     else:
-        return render_template('playlists.html')
+        return redirect('/playlists')
         
-    return render_template('playlist-created.html')
 
 def create_spotipy_oauth():
     return SpotifyOAuth(client_id=os.getenv('client_id'),
@@ -109,6 +118,26 @@ def create_spotipy_oauth():
             redirect_uri=url_for('authorize', _external=True),
             scope='user-library-read playlist-modify-public')
     
+def get_token():
+    token_valid = False
+    token_info = session.get('token_info', {})
+    
+    # Verificando se a sessão já tem um token armazenado
+    if not (session.get('token_info', False)):
+        token_valid = False
+        return token_info, token_valid
+    
+    # Verificando se o token expirou
+    now = int(time.time())
+    is_token_expired = session.get('token_info').get('expires_at') - now < 60
+    
+    # Atualizando o token caso tenha expirado
+    if (is_token_expired):
+        sp_oauth = create_spotipy_oauth()
+        token_info = sp_oauth.refresh_access_token(session.get('token_info').get('refresh_token'))
+        
+    token_valid = True
+    return token_info, token_valid
 
 if __name__ == '__main__':
     app.run(debug=False)
